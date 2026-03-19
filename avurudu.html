@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awurudu Festival 2026</title>
+
+<style>
+body {
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #fff3e0, #ffe0b2);
+    text-align:center;
+}
+
+header {
+    background: linear-gradient(45deg, orange, red);
+    color:white;
+    padding:30px;
+}
+
+nav button {
+    margin:5px;
+    padding:10px;
+    border:none;
+    background:#ffcc80;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+section {
+    padding:20px;
+}
+
+#countdown {
+    font-size:30px;
+    margin:20px;
+}
+
+.table {
+    margin:auto;
+    border-collapse: collapse;
+}
+
+.table td, .table th {
+    border:1px solid #333;
+    padding:10px;
+}
+
+.firework {
+    position: fixed;
+    width:5px;
+    height:5px;
+    background:red;
+    animation: explode 1s ease-out infinite;
+}
+
+@keyframes explode {
+    from {transform: scale(1); opacity:1;}
+    to {transform: scale(10); opacity:0;}
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1 id="title">Happy Awurudu 2026</h1>
+<p id="subtitle">Celebrate Sinhala & Tamil New Year</p>
+</header>
+
+<nav>
+<button onclick="setLang('en')">English</button>
+<button onclick="setLang('si')">සිංහල</button>
+<button onclick="setLang('ta')">தமிழ்</button>
+</nav>
+
+<section>
+<h2>🎇 Countdown</h2>
+<div id="countdown"></div>
+</section>
+
+<section>
+<h2 id="nakathTitle">Nakath Times</h2>
+<table class="table" id="nakathTable"></table>
+</section>
+
+<section>
+<h2>🎵 Music</h2>
+<audio controls>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+</section>
+
+<script>
+// Countdown
+const newYear = new Date("April 14, 2026 00:00:00").getTime();
+setInterval(() => {
+    const now = new Date().getTime();
+    const gap = newYear - now;
+
+    const d = Math.floor(gap / (1000*60*60*24));
+    const h = Math.floor((gap % (1000*60*60*24))/(1000*60*60));
+    const m = Math.floor((gap % (1000*60*60))/(1000*60));
+    const s = Math.floor((gap % (1000*60))/1000);
+
+    document.getElementById("countdown").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+},1000);
+
+// Nakath Data
+const nakath = [
+    {event:"Dawn", time:"6:00 AM"},
+    {event:"Milk Boiling", time:"6:30 AM"},
+    {event:"First Meal", time:"7:00 AM"}
+];
+
+function loadTable(){
+    let html = "<tr><th>Event</th><th>Time</th></tr>";
+    nakath.forEach(n=>{
+        html += `<tr><td>${n.event}</td><td>${n.time}</td></tr>`;
+    });
+    document.getElementById("nakathTable").innerHTML = html;
+}
+
+loadTable();
+
+// Language
+function setLang(lang){
+    if(lang==='si'){
+        title.innerText="සුභ අලුත් අවුරුද්දක්";
+        subtitle.innerText="සිංහල හා දෙමළ අලුත් අවුරුද්ද";
+        nakathTitle.innerText="නැකත් වේලාවන්";
+    }
+    else if(lang==='ta'){
+        title.innerText="இனிய புத்தாண்டு";
+        subtitle.innerText="சிங்கள & தமிழ் புத்தாண்டு";
+        nakathTitle.innerText="நேரங்கள்";
+    }
+    else{
+        title.innerText="Happy Awurudu 2026";
+        subtitle.innerText="Celebrate Sinhala & Tamil New Year";
+        nakathTitle.innerText="Nakath Times";
+    }
+}
+
+// Fireworks animation
+setInterval(()=>{
+    let fw = document.createElement("div");
+    fw.className="firework";
+    fw.style.left = Math.random()*100+"vw";
+    fw.style.top = Math.random()*100+"vh";
+    document.body.appendChild(fw);
+
+    setTimeout(()=>fw.remove(),1000);
+},300);
+
+</script>
+
+</body>
+</html>
